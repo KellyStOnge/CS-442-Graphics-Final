@@ -9,18 +9,17 @@ import {EffectComposer} from "/Libraries/three.js/examples/jsm/postprocessing/Ef
 import {RenderPass} from "/Libraries/three.js/examples/jsm/postprocessing/RenderPass.js";
 import { MTLLoader } from '/Libraries/three.js/examples/jsm/loaders/MTLLoader.js';
 import { controlsState , updateCameraPositionAndRotation, camera} from './controls.js';
-//IMPORTS=====================================================================================
+//===========IMPORTS===========================================================================================
 
-//INITIALIZATION=====================================================================================
+//========INITIALIZATION=======================================================================================
 
 const width = window.innerWidth, height = window.innerHeight;
 const scene = new THREE.Scene();
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 
-
-//FISH===============FISH===============FISH=============FISH==================
-//FISH===============FISH===============FISH=============FISH==================
+//============================================================================================================
+//========SATIC=FISH1=========================================================================================
 
 let fish;
 
@@ -58,7 +57,8 @@ textureLoader.load('/Assets/redFish/gtrfishred.png', function (texture) {
     );
 });
 
-// POPULATE MORE FISH!!!!======================================================
+//============================================================================================================
+//=========STATIC=FISH2=======================================================================================
 
 function addFish() {
     // loads the texture
@@ -103,6 +103,8 @@ function addFish() {
     });
 }
 
+//============================================================================================================
+//============================================================================================================
 const numberOfFish = 100; 
 
 // Add the fish to the scene
@@ -113,146 +115,154 @@ for (let i = 0; i < numberOfFish; i++) {
 let entityManager = new YUKA.EntityManager(); //YUKA modeling
 let time = new YUKA.Time();
 
+//============================================================================================================
+//=====WANDERING=FISH1========================================================================================
+
 function  wanderingFish(){
 
 
-let fish2; 
+    let fish2; 
 
-// loads the texture
-const textureLoader2 = new THREE.TextureLoader();
-textureLoader2.load('/Assets/redFish/gtrfishred.png', function (texture) {
-    const material = new THREE.MeshStandardMaterial({ map: texture });
+    // loads the texture
+    const textureLoader2 = new THREE.TextureLoader();
+    textureLoader2.load('/Assets/redFish/gtrfishred.png', function (texture) {
+        const material = new THREE.MeshStandardMaterial({ map: texture });
 
-    //loads obj
-    const loader = new OBJLoader();
-    loader.load(
-        '/Assets/redFish/Fish (Red).obj',
-        function (object) {
+        //loads obj
+        const loader = new OBJLoader();
+        loader.load(
+            '/Assets/redFish/Fish (Red).obj',
+            function (object) {
 
-            // reset any rotations first
-            object.rotation.set(0, 0, 0);
-            object.scale.set(1.0, 1.0, 1.0); //scale
-            object.rotation.y = -Math.PI/2 ;
-            //object.rotation.x = -Math.PI/2 ;
+                // reset any rotations first
+                object.rotation.set(0, 0, 0);
+                object.scale.set(1.0, 1.0, 1.0); //scale
+                object.rotation.y = -Math.PI/2 ;
+                //object.rotation.x = -Math.PI/2 ;
 
-            
-            object.traverse(function (child) {
-                if (child instanceof THREE.Mesh) {
-                    child.material = material;
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-                }
-            });
+                
+                object.traverse(function (child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.material = material;
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
+                   
+
+                   object.userData = {
+                        amplitude: 2, // maximum vertical movement distance
+                        frequency: Math.random() * 0.005 + 0.001, // random frequency
+                        phase: Math.random() * Math.PI * 2 // random phase
+                    };
+                    //add to scene
+                    scene.add(object);
                
+                fish2 = object; 
 
-               object.userData = {
-                    amplitude: 2, // maximum vertical movement distance
-                    frequency: Math.random() * 0.005 + 0.001, // random frequency
-                    phase: Math.random() * Math.PI * 2 // random phase
-                };
-                //add to scene
-                scene.add(object);
-           
-            fish2 = object; 
+                const vehicle = new YUKA.Vehicle(); //new instance of the  yuka vehicle system
+                  
 
-            const vehicle = new YUKA.Vehicle(); //new instance of the  yuka vehicle system
-              
+                const wanderBehavior = new YUKA.WanderBehavior();
 
-            const wanderBehavior = new YUKA.WanderBehavior();
-
-            wanderBehavior.radius = 5;     // radius of the wander circle
-            wanderBehavior.distance = 10;  // distance the wander circle is projected in front of the agent
-            wanderBehavior.jitter = 100;   // the amount of random displacement added each second
-            
-            vehicle.maxSpeed = 5;           // set a maximum speed
-            vehicle.maxForce = 10;          // set a maximum steering force
+                wanderBehavior.radius = 5;     // radius of the wander circle
+                wanderBehavior.distance = 10;  // distance the wander circle is projected in front of the agent
+                wanderBehavior.jitter = 100;   // the amount of random displacement added each second
+                
+                vehicle.maxSpeed = 5;           // set a maximum speed
+                vehicle.maxForce = 10;          // set a maximum steering force
 
 
-            vehicle.position.copy(vehicle.position); // copy the initial position from the loaded model
-            vehicle.setRenderComponent( fish2, sync );
+                vehicle.position.copy(vehicle.position); // copy the initial position from the loaded model
+                vehicle.setRenderComponent( fish2, sync );
 
 
-            vehicle.steering.add( wanderBehavior ); // adds the wandering behavior to each fish
+                vehicle.steering.add( wanderBehavior ); // adds the wandering behavior to each fish
 
-            entityManager.add( vehicle );           // add to the entity manager for boundary
-                                                    //behavior etc
+                entityManager.add( vehicle );           // add to the entity manager for boundary
+                                                        //behavior etc
 
-        },
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function (error) {
-            console.log('An error happened');
-        }
-    );
-});
+            },
+            function (xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            function (error) {
+                console.log('An error happened');
+            }
+            );
+    });
 }
 
+//============================================================================================================
+//=======WANDERING=FISH2======================================================================================
 
 function  wanderingFish2(){
 
-let fish2
+    let fish2
 
-// Load the texture
-const textureLoader2 = new THREE.TextureLoader();
-textureLoader2.load('/Assets/Fish/fish01_cute_c.png', function (texture) {
-    const material = new THREE.MeshStandardMaterial({ map: texture });
+    const textureLoader2 = new THREE.TextureLoader();
+    textureLoader2.load('/Assets/Fish/fish01_cute_c.png', function (texture) {
+    
+        const material = new THREE.MeshStandardMaterial({ map: texture });
+        const loader = new OBJLoader();
 
-    const loader = new OBJLoader();
-    loader.load(
-        '/Assets/Fish/fish01.obj',
-        function (object) {
+        loader.load('/Assets/Fish/fish01.obj',
+        
+                function (object) {
 
-                                                // reset any rotations first
-            object.rotation.set(0, 0, 0);
-            object.scale.set(0.1, 0.1, 0.1);    // scale
-            object.rotation.y = -Math.PI/3 ;
-            //object.rotation.x = -Math.PI/2 ;
+                                                        // reset any rotations first
+                        object.rotation.set(0, 0, 0);
+                        object.scale.set(0.1, 0.1, 0.1);    // scale
+                        object.rotation.y = -Math.PI/3 ;
+                      //object.rotation.x = -Math.PI/2 ;
 
-            
-            object.traverse(function (child) {
-                if (child instanceof THREE.Mesh) {
-                    child.material = material;
-                    child.castShadow = true;
-                    child.receiveShadow = true;
+                    
+                        object.traverse(function (child) {
+                            if (child instanceof THREE.Mesh) {
+                                child.material = material;
+                                child.castShadow = true;
+                                child.receiveShadow = true;
+                            }
+                        });
+                    
+                                                            //add object to scene
+                        scene.add(object);
+                        fish2 = object;                     // assign the loaded object to the fish variable
+
+                        const vehicle = new YUKA.Vehicle();
+                           
+                        const wanderBehavior = new YUKA.WanderBehavior();
+
+                        wanderBehavior.radius = 5;          // radius of the wander circle
+                        wanderBehavior.distance = 10;       // distance the wander circle is projected in front of the agent
+                        wanderBehavior.jitter = 100;        // the amount of random displacement added each second
+                        
+                        vehicle.maxSpeed = 5;               // Set a maximum speed
+                        vehicle.maxForce = 10;              // Set a maximum steering force
+
+
+                        vehicle.position.copy(vehicle.position); // Copy the initial position from the loaded model
+                        vehicle.setRenderComponent( fish2, sync );
+
+
+
+                        vehicle.steering.add( wanderBehavior );
+
+                        entityManager.add( vehicle );
+                },
+
+                function (xhr) {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                function (error) {
+                    console.log('An error happened');
                 }
-            });
-            
-                                                //add object to scene
-            scene.add(object);
-            fish2 = object;                     // assign the loaded object to the fish variable
-
-            const vehicle = new YUKA.Vehicle();
-               
-            const wanderBehavior = new YUKA.WanderBehavior();
-
-            wanderBehavior.radius = 5;          // radius of the wander circle
-            wanderBehavior.distance = 10;       // distance the wander circle is projected in front of the agent
-            wanderBehavior.jitter = 100;        // the amount of random displacement added each second
-            
-            vehicle.maxSpeed = 5;               // Set a maximum speed
-            vehicle.maxForce = 10;              // Set a maximum steering force
-
-
-            vehicle.position.copy(vehicle.position); // Copy the initial position from the loaded model
-            vehicle.setRenderComponent( fish2, sync );
-
-
-
-            vehicle.steering.add( wanderBehavior );
-
-            entityManager.add( vehicle );
-        },
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function (error) {
-            console.log('An error happened');
-        }
-    );
-});
+        );
+    });
 }
 
+//============================================================================================================
+//======WANDERING=FISH3=======================================================================================
 function wanderingFish3() {
     //shark texture
     const sharkTextureLoader = new THREE.TextureLoader();
@@ -337,8 +347,8 @@ for (let i = 0; i < numberOfFish2; i++) {
     wanderingFish3();
 }
 
-//================================================================
-
+//============================================================================================================
+//=======PIRATE=SHIP==========================================================================================
 function pirateShip(){
 
     const loader = new OBJLoader();
@@ -390,6 +400,8 @@ function pirateShip2(){
 
 pirateShip2();
 
+//============================================================================================================
+//========STONE=COLUMNS=======================================================================================
 
 function addStoneColumns() {
     const loader = new OBJLoader();
@@ -432,6 +444,9 @@ function addStoneColumns() {
 
 addStoneColumns();
 
+//============================================================================================================
+//==========STATUE============================================================================================
+
 function addMarbleStatue() {
     const loader = new OBJLoader();
     const textureLoader = new THREE.TextureLoader();
@@ -460,7 +475,8 @@ function addMarbleStatue() {
 
 addMarbleStatue();
 
-//================================================================
+//============================================================================================================
+//=====VOLCANO================================================================================================
 
 let fire;
 
@@ -510,17 +526,19 @@ function addVolcano() {
 
 addVolcano();
 
-//================================================================
+//============================================================================================================
 
-//====PARTICLES============================================================
+//====PARTICLES===============================================================================================
 
 const particleGeometry = new THREE.BufferGeometry();
 const particleCount = 1000;
-const posArray = new Float32Array(particleCount * 3); // x, y, z for each particle
-for (let i = 0; i < particleCount * 3; i++) {
-    // Random positions for particles
-    posArray[i] = (Math.random() - 0.5) * 200; // spread particles over a larger area
-}
+const posArray = new Float32Array(particleCount * 3);           // x, y, z for each particle
+
+    for (let i = 0; i < particleCount * 3; i++) {
+        // Random positions for particles
+        posArray[i] = (Math.random() - 0.5) * 200;              // spread particles over a larger area
+    }
+
 particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
 const particleMaterial = new THREE.PointsMaterial({
@@ -532,8 +550,10 @@ const particleMaterial = new THREE.PointsMaterial({
 const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
 scene.add(particleMesh);
 
+//============================================================================================================
 
-//EASTER ISLAND HEAD!!!+==================================================
+//EASTER ISLAND HEAD!!!+======================================================================================
+
 function Easter(objPath, position, eyeLightPositions) {
     // Load the .obj file
     const loader = new OBJLoader();
@@ -558,8 +578,8 @@ function Easter(objPath, position, eyeLightPositions) {
 
 Easter('/Assets/moai_vol.2.obj', new THREE.Vector3(70, -24, 20));
 
-
-//===RANDOM ROCKS===============================================================================================
+//==============================================================================================================
+//===RANDOM=ROCKS===============================================================================================
 
 function populateRocks() {
     const loader = new OBJLoader();
@@ -603,6 +623,7 @@ function populateRocks() {
 
 populateRocks();
 
+//================================================================================================================
 //===RANDOM SEAWEED===============================================================================================
 
 function populateSeaweed() {
@@ -649,6 +670,7 @@ function populateSeaweed() {
 
 populateSeaweed();
 
+//==============================================================================================================
 //===RANDOM CORAL===============================================================================================
 
 function populateCoral() {
@@ -693,7 +715,8 @@ function populateCoral() {
 
 populateCoral();
 
-//SUBMARINE==PROPELLER================================
+//==============================================================================================================
+//SUBMARINE==PROPELLER==========================================================================================
 
 let submarinePropeller; 
 
@@ -709,7 +732,8 @@ function addPropellerToSubmarine(submarine) {
     });
 }
 
-//SUBMARINE============================================================================
+//==============================================================================================================
+//SUBMARINE=====================================================================================================
 
 let submarineVehicle; // This will be our YUKA vehicle that represents the submarine
 
@@ -804,9 +828,8 @@ function addSubmarine() {
 
 addSubmarine();
 
-//Spongebob===============================================================
-
-//SPONGEBOBS==HOUSE=======================================================
+//==============================================================================================================
+//SPONGEBOBS==HOUSE=============================================================================================
 
 function BOB() {
     const loader = new OBJLoader();
@@ -847,7 +870,8 @@ function BOB() {
 
 BOB();
 
-//PATRICKS=HOUSE===============================================================
+//==============================================================================================================
+//PATRICKS=HOUSE================================================================================================
 
 function patricksHouse() {
     const loader = new OBJLoader();
@@ -876,10 +900,8 @@ function patricksHouse() {
 
 patricksHouse();
 
-//-------------------------------------------------------------
-
-//LIGHTING===================================================
-
+//==============================================================================================================
+//=======LIGHTING===============================================================================================
 
     const directionalLight = new THREE.DirectionalLight(0xffffe0, 1);
         directionalLight.position.set(0, 1, 0);
@@ -916,7 +938,8 @@ patricksHouse();
     const shallowColor = new THREE.Color(0xa4dfed); // light color at the surface
     const deepColor = new THREE.Color(0x001e0f);    //  deep blue color for deeper depths
 
-//-------WATER SURFACE------------------------------------------------------
+//==============================================================================================================
+//====WATER=SURFACE=============================================================================================
 
     const waterGeometry = new THREE.PlaneGeometry(1000, 1000);
 
@@ -940,10 +963,8 @@ patricksHouse();
     water.position.y = 13;            //the level water surface appears
     scene.add(water);
 
-
-//-------------------------------------------------------------
-
-//--------RENDERER -----------------------------------------------------
+//==============================================================================================================
+//======RENDERER================================================================================================
 
     // Set up the WebGL renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -962,8 +983,8 @@ patricksHouse();
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
 
-
-//SEA FLOOR====================================================================
+//==============================================================================================================
+//======SEA=FLOOR===============================================================================================
 
     // texture loader
     const seafloorTexture = new THREE.TextureLoader().load('/Assets/skybox/Underwater_Box_Bottom.jpg'); // Path to your image file
@@ -974,7 +995,6 @@ patricksHouse();
     const planeGeometry = new THREE.PlaneGeometry(400, 400);         // same size as skybox
     const seafloor = new THREE.Mesh(planeGeometry, seafloorMaterial);
 
-    
     seafloor.rotation.x = -Math.PI / 2;
     seafloor.position.y = -24;
 
@@ -982,8 +1002,8 @@ patricksHouse();
     seafloor.receiveShadow = true;
     scene.add(seafloor);
 
-
-//SkyBox====================================================================
+//==============================================================================================================
+//========SkyBox================================================================================================
 
     // Load Skybox Textures
     const skyboxImagePaths = [
@@ -1009,10 +1029,8 @@ patricksHouse();
     scene.add(skybox);
     skybox.position.set(0, -5, 0); // Move the skybox down
 
-
-//END SKYBOX======================================================================
-
-//BOUNDARY==FOR===ENTITYS=============================================================
+//==============================================================================================================
+//======BOUNDARY==FOR===ENTITYS=================================================================================
 
     const boundarySize = 380; // boundary size
 
@@ -1025,16 +1043,14 @@ patricksHouse();
         if (entity.position.z < -boundarySize / 2) entity.position.z = -boundarySize / 2;
     }
 
-
     function updateEntities() {
         entityManager.entities.forEach(entity => {
             checkBoundary(entity);
         });
     }
 
-//BOUNDARY==FOR===ENTITYS=============================================================
-
-//FOG=============================================================================
+//==============================================================================================================
+//=========FOG==================================================================================================
 
     // Create exponential fog
     const fogDensity = 0.006;                               // density of the fog
@@ -1042,38 +1058,37 @@ patricksHouse();
 
     scene.fog = new THREE.FogExp2(fogColorExp, fogDensity); // add to scene
 
-//FOG============================================================================
-
-// SYNC EVERTHING======================
+//==============================================================================================================
+//=====SYNC-EVERYTHING==========================================================================================
 
     let lastTime = performance.now();
 
     function sync(entity, renderComponent) {
         renderComponent.position.copy(entity.position);
         renderComponent.quaternion.copy(entity.rotation);
-
     }
 
-//ANIMATION=LOOP================================================================
+//==============================================================================================================
+//=====ANIMATION=LOOP============================================================================================
 
     function animation(time) {
-                                                                                        //Update the YUKA entityManager with the time delta
+                                                            //Update the YUKA entityManager with the time delta
         const now = performance.now();
-        const deltaTime = (now - lastTime) / 1000;                                      // convert to seconds
+        const deltaTime = (now - lastTime) / 1000;          // convert to seconds
         lastTime = now;
 
         updateEntities();
 
-                                                                                         // Update YUKA's simulation
+                                                            // Update YUKA's simulation
         entityManager.update(deltaTime);
         // Movement logic
         velocity.x -= velocity.x * 10.0 * deltaTime;
         velocity.z -= velocity.z * 10.0 * deltaTime;
 
-        updateCameraPositionAndRotation(deltaTime);                                     //updates camera see control.js 
+        updateCameraPositionAndRotation(deltaTime);        //updates camera see control.js 
 
         
-        const maxIntensity = 10;                                                        // maximum intensity lights
+        const maxIntensity = 10;                           // maximum intensity lights
         const waterSurfaceY = 40; 
         const cameraHeightBelowSurface = waterSurfaceY - camera.position.y;
         const fadeDistance = 70;
@@ -1102,8 +1117,11 @@ patricksHouse();
 
         renderer.render(scene, camera);
 
-    }//ANIMATION LOOP============================================================================================
+    }
 
-    renderer.setAnimationLoop(animation);
+//=================================================================================================================
+//=======ANIMATION LOOP============================================================================================
 
-    animation();
+renderer.setAnimationLoop(animation);
+
+animation();
