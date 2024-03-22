@@ -9,6 +9,7 @@ This project presents a complex, interactive 3D underwater scene using Three.js,
 
 ## Demo
 - Click me to see a full demo via Youtube
+
 [![Final Demo](https://i.ytimg.com/vi/waSicRvg03U/hqdefault.jpg)](https://youtu.be/waSicRvg03U?si=KReRRs2hrlTTWjlj "CS 442 Computer Graphics Final Project ")
 
 
