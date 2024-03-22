@@ -8,7 +8,7 @@ CS 442 is the computer graphics course at WSU Vancouver. It Focuses on learning 
 This project presents a complex, interactive 3D underwater scene using Three.js, a JavaScript library that uses WebGL and YUKA Ai Vehicles. The scene features a detailed underwater environment with dynamic lighting, textures, and animations, providing a rich and immersive experience.
 
 ## Demo
-Click me to see a full demo via Youtube
+- Click me to see a full demo via Youtube
 [![Final Demo](https://i.ytimg.com/vi/waSicRvg03U/hqdefault.jpg)](https://youtu.be/waSicRvg03U?si=KReRRs2hrlTTWjlj "CS 442 Computer Graphics Final Project ")
 
 
