@@ -1,0 +1,11 @@
+Model Information:
+* title:	Yellow submarine - Beatles
+* source:	https://sketchfab.com/3d-models/yellow-submarine-beatles-f6763bd2c00d4ff784dca33a31adea08
+* author:	Ralph's Workshop (https://sketchfab.com/RalphEdenbag)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Yellow submarine - Beatles" (https://sketchfab.com/3d-models/yellow-submarine-beatles-f6763bd2c00d4ff784dca33a31adea08) by Ralph's Workshop (https://sketchfab.com/RalphEdenbag) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Yellow Submarine - Beatles Cartoons - V2
+* source:	https://sketchfab.com/3d-models/yellow-submarine-beatles-cartoons-v2-8b961567423d408e911ca2d77e32abf4
+* author:	Ralph's Workshop (https://sketchfab.com/RalphEdenbag)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Yellow Submarine - Beatles Cartoons - V2" (https://sketchfab.com/3d-models/yellow-submarine-beatles-cartoons-v2-8b961567423d408e911ca2d77e32abf4) by Ralph's Workshop (https://sketchfab.com/RalphEdenbag) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
