@@ -26,8 +26,8 @@ To set up and run this project, follow these steps:
 Navigate to the project directory and install the necessary dependencies:
 
 3. **Run the Project**
-Start the project using a local server. You can use any HTTP server; here's an example using `http-server`:
-Once the server starts, open your browser and go to `http://localhost:8080` (or the port provided in your terminal).
+Download and move into the directory from there you will need to start the project using a local server. You can use any HTTP server; here's an example using `http-server`:
+Once the server starts, open your browser and go to `http://127.0.0.1:8080\index.html` (or the port provided in your terminal). Go to your browser and run 128.0.0.1
 
 ## Controls
 - **W, A, S, D**: Move forward, left, backward, right
